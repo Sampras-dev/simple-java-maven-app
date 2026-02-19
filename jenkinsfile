@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        mavev 'maven3'
+        maven 'Maven3'
     }
 
     environment {
@@ -13,7 +13,8 @@ pipeline {
     stages{
         stage('checkout') {
             steps {
-                https://github.com/Sampras-dev/simple-java-maven-app.git
+                git 'https://github.com/Sampras-dev/simple-java-maven-app.git'
+
 
             }
         }
@@ -35,7 +36,7 @@ pipeline {
                 withSonarQubeEnv('SonarQube') {
                     sh """ 
                     mvn sonar:sonar \
-                    -Dsonar.project=${SONAR_PROJECT_KEY}
+                    -Dsonar.projectkey=${SONAR_PROJECT_KEY}
                     
                     """
                 }
@@ -43,14 +44,15 @@ pipeline {
         }
 
     }
-}
 
 
-post {
-    success { 
-        echo 'Build and sonarQube scan successfull'
-    }
-    failure {
-        echo 'Build failed'
+
+    post {
+        success { 
+            echo 'Build and sonarQube scan successfull'
+        }
+        failure {
+            echo 'Build failed and retry'
+        }
     }
 }
