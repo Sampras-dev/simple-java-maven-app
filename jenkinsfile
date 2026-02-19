@@ -48,7 +48,7 @@ pipeline {
 
 post {
     success { 
-        echo 'Build Successfull and sonarQube scan successfull'
+        echo 'Build and sonarQube scan successfull'
     }
     failure {
         echo 'Build failed'
